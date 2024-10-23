@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+const posts = await Astro.glob('./*.mdx');
+const sortedPosts = posts.sort((a, b) => 
+  new Date(b.frontmatter.publishDate).getTime() - new Date(a.frontmatter.publishDate).getTime()
+);
+---
+
+<Layout title="Blog Posts">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold text-primary mb-12">All Blog Posts</h1>
+    <div class="space-y-8">
+      {sortedPosts.map((post) => (
+        <BlogCard
+          title={post.frontmatter.title}
+          description={post.frontmatter.description}
+          publishDate={new Date(post.frontmatter.publishDate)}
+          slug={post.frontmatter.slug}
+          readingTime={post.frontmatter.readingTime}
+        />
+      ))}
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,34 @@
+---
+import { format } from 'date-fns';
+
+interface Props {
+  title: string;
+  description: string;
+  publishDate: Date;
+  slug: string;
+  readingTime: string;
+}
+
+const { title, description, publishDate, slug, readingTime } = Astro.props;
+---
+
+<article class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-6 fade-in">
+  <a href={`/blog/${slug}`} class="block">
+    <h2 class="text-2xl font-bold text-primary-light dark:text-primary-dark hover:text-accent-light dark:hover:text-accent-dark mb-2 transition-colors">
+      {title}
+    </h2>
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+      <time datetime={publishDate.toISOString()}>
+        {format(publishDate, 'MMMM d, yyyy')}
+      </time>
+      <span class="mx-2">•</span>
+      <span>{readingTime}</span>
+    </div>
+    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+      {description}
+    </p>
+    <div class="mt-4">
+      <span class="text-accent-light dark:text-accent-dark font-medium">Read more →</span>
+    </div>
+  </a>
+</article>
